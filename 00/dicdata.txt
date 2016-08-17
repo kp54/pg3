@@ -1,0 +1,10 @@
+ginger 生姜
+orange みかん
+tomato トマト
+banana バナナ
+grapes ぶどう
+soybean 大豆
+watermelon すいか
+strawberry いちご
+persimmon 柿
+walnut くるみ
