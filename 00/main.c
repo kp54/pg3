@@ -4,6 +4,8 @@
 #include "node.h"
 #include "node2.h"
 
+#include "treeInterception.h"
+
 extern int print_menu(void);
 extern int load_dicdata(char*, char [][256], char [][256]);
 extern void print_array(char [][256], int);
