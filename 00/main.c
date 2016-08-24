@@ -18,6 +18,10 @@ extern node2* create_node2(char*, char*);
 extern void insert_tree(node2*, node2*);
 extern void close_tree(node2*);
 
+extern void store_dicdata(char*, char [][256], char [][256],int);
+extern void store_list(char*, node*);
+extern void store_tree(char*, node2*);
+
 int main(void)
 {
 	int i=0;
@@ -88,6 +92,11 @@ int main(void)
 					break;
 					
 				case 7:
+					if(0<count1) store_dicdata("out1.txt",eng,jpn,count1);
+					if(init->next) store_list("out2.txt",init->next);
+					if(root) store_tree("out3.txt",root);
+					break;
+					
 				case 8:
 					printf(">>未実装\n");
 					break;
@@ -96,6 +105,7 @@ int main(void)
 					if(init->next){
 						close_list(init);
 					}else{
+						free(init);
 						printf("削除する連結リストは存在しない\n");
 					}
 					
