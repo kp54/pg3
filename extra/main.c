@@ -19,7 +19,7 @@ int convert(int mode, const char* filename, const char* key)
 	unsigned char checksum[16];
 	node* loop[16];
 	node* cur=NULL;
-	char c='\0';
+	int c='\0';
 	
 	printf("Opening file...\n");
 	
@@ -39,6 +39,20 @@ int convert(int mode, const char* filename, const char* key)
 	MD5(key,strlen(key),hash);
 	MD5(hash,16,checksum);
 	
+#ifdef DEBUG
+
+	printf("\t    hash: ");
+	for(i=0;i<16;i++)
+		printf("%02x",hash[i]);
+	printf("\n");
+	
+	printf("\tchecksum: ");
+	for(i=0;i<16;i++)
+		printf("%02x",checksum[i]);
+	printf("\n");
+
+#endif
+
 	if(mode==1){
 		printf("Verifing checksum...\n");
 		
@@ -66,7 +80,7 @@ int convert(int mode, const char* filename, const char* key)
 	printf("Converting...\n");
 	
 	while((c=fgetc(fp))!=EOF){
-		fputc(c^cur->eng[0],tmp);
+		fputc((char)c^cur->eng[0],tmp);
 		cur=cur->next;
 	}
 	fflush(tmp);
@@ -108,7 +122,7 @@ int convert(int mode, const char* filename, const char* key)
 int main (void)
 {
 	int mode=0;
-	char* key;
+	char* key=NULL;
 	
 	printf("Select submenu:\n\t1: encrypt\n\t2: decrypt\n\t3: cancel\n>> ");
 	scanf("%d",&mode);
@@ -122,6 +136,8 @@ int main (void)
 			}else{
 				printf("Failed.\n");
 			}
+			
+			key=NULL;
 			
 			break;
 		
