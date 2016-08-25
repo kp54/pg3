@@ -1,5 +1,5 @@
-main: main.o menu.o file_in.o linked_list.o linked_list2.o tree.o file_out.o node.h node2.h
-	gcc -o main main.o menu.o file_in.o linked_list.o linked_list2.o tree.o file_out.o
+main: main.o menu.o file_in.o linked_list.o linked_list2.o tree.o file_out.o crypt.o node.h node2.h
+	gcc -o main main.o menu.o file_in.o linked_list.o linked_list2.o tree.o file_out.o crypt.o -lcrypto
 
 main.o: main.c node.h node2.h
 	gcc -c -o main.o main.c
@@ -21,6 +21,9 @@ tree.o: tree.c node2.h
 
 file_out.o: file_out.c node.h node2.h
 	gcc -c -o file_out.o file_out.c
+
+crypt.o: crypt.c node.h
+	gcc -c -o crypt.o crypt.c
 
 .PHONY:clean
 clean:

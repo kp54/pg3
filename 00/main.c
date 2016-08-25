@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 #include "node.h"
 #include "node2.h"
@@ -24,6 +26,8 @@ extern void store_dicdata(char*, char [][256], char [][256],int);
 extern void store_list(char*, node*);
 extern void store_tree(char*, node2*);
 
+extern int convert(int, const char*, const char*);
+
 int main(void)
 {
 	int i=0;
@@ -35,6 +39,7 @@ int main(void)
 		for(i=0;i<20;i++) jpn[i][0]='\0';
 	node* init=create_node("","");
 	node2* root=NULL;
+	char* key=NULL;
 	
 	while(1){
 		menu_num=print_menu();
@@ -100,7 +105,30 @@ int main(void)
 					break;
 					
 				case 8:
-					printf(">>未実装\n");
+					printf("Select submenu:\n\t1: encrypt\n\t2: decrypt\n\t3: cancel\n>> ");
+					i=0;
+					scanf("%d",&i);
+					switch(i){
+						case 1:
+						case 2:
+							key=getpass("key>> ");
+			
+							if(convert(i-1,"dicdata.txt",key)==0){
+								printf("Success.\n");
+							}else{
+								printf("Failed.\n");
+							}
+							
+							key=NULL;
+							
+							break;
+		
+						case 3:
+							break;
+		
+						default:
+							printf("Select must be number (1-3)\n");
+					}
 					break;
 				
 				case 9:
