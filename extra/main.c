@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <openssl/md5.h>
+#include <unistd.h>
 
 typedef struct node{
 	char eng[256];
@@ -37,16 +38,6 @@ int convert(int mode, const char* filename, const char* key)
 	
 	MD5(key,strlen(key),hash);
 	MD5(hash,16,checksum);
-	
-	printf("\t    hash: ");
-	for(i=0;i<16;i++)
-		printf("%02x",hash[i]);
-	printf("\n");
-	
-	printf("\tchecksum: ");
-	for(i=0;i<16;i++)
-		printf("%02x",checksum[i]);
-	printf("\n");
 	
 	if(mode==1){
 		printf("Verifing checksum...\n");
@@ -117,21 +108,14 @@ int convert(int mode, const char* filename, const char* key)
 int main (void)
 {
 	int mode=0;
-	char key[256]="";
+	char* key;
 	
 	printf("Select submenu:\n\t1: encrypt\n\t2: decrypt\n\t3: cancel\n>> ");
 	scanf("%d",&mode);
 	switch(mode){
 		case 1:
 		case 2:
-			printf("key>> ");
-			while(getchar()!='\n');
-			fgets(key,256,stdin);
-			if(strchr(key,'\n')){
-				key[strlen(key)-1]='\0';
-			}else{
-				while(getchar()!='\n');
-			}
+			key=getpass("key>> ");
 			
 			if(convert(mode-1,"dicdata.txt",key)==0){
 				printf("Success.\n");
